@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/PazlesBuzles/Scenes/MainMenu.unity
+    guid: 739f32597eed6eb4994a771ae8e716cb
+  - enabled: 1
+    path: Assets/PazlesBuzles/Scenes/Game.unity
+    guid: 5eaadff238431e140b834de8de09706d
   m_configObjects: {}
