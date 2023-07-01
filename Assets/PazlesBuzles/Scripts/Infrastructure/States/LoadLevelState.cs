@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 internal class LoadLevelState : IGameState
 {
+    public int PazzleCountOnX => _pazzleCountOnX;
+    public int PazzleCountOnY => _pazzleCountOnY;
+
     private int _pazzleCountOnX= 0;
     private int _pazzleCountOnY = 0;
     private Sprite _pazzleImage;

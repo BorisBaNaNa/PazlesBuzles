@@ -3,10 +3,14 @@ using UnityEngine;
 public class Boostraper : MonoBehaviour, IService
 {
     public GameStateMachine StateMachine => _gameStateMachine;
+    public LayerMask TableMask;
 
     [Tooltip("Wieving current game state")]
     [SerializeField]
     private string CurrentGameState;
+    [Tooltip("Prefabs")]
+    [SerializeField]
+    private PiecePlace PiecePlacePrefab;
 
     private GameStateMachine _gameStateMachine;
 
@@ -34,7 +38,8 @@ public class Boostraper : MonoBehaviour, IService
 
     private void RegisterServices()
     {
-
+        AllServices.Instance.RegisterService(new FactoryPazzlePiece());
+        AllServices.Instance.RegisterService(new FactoryPiecePlace(PiecePlacePrefab));
     }
 
     private void Update()

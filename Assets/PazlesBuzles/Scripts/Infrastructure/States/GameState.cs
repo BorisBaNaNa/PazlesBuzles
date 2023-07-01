@@ -4,12 +4,15 @@ using UnityEngine;
 
 internal class GameState : IGameState
 {
+    public List<Sprite> PazzleSprites => _pazzleSprites;
+    public Sprite OrigImage => _origImage;
+
+    public PiecePlace SelectedPlace { get; set; }
+    public bool PieceIsTaken { get; set; }
+
     private readonly GameStateMachine _stateMachine;
     private List<Sprite> _pazzleSprites;
     private Sprite _origImage;
-
-    public List<Sprite> PazzleSprites => _pazzleSprites;
-    public Sprite OrigImage => _origImage;
 
     public GameState(GameStateMachine stateMachine)
     {

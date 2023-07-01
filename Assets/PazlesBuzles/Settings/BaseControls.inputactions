@@ -7,9 +7,18 @@
             "actions": [
                 {
                     "name": "Rotate",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "32908471-4d48-4765-98d2-acf8d0b7b446",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MousePos",
+                    "type": "Value",
+                    "id": "35395bc0-6ea1-4fdf-90b2-c41b363cedae",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -17,8 +26,19 @@
             ],
             "bindings": [
                 {
+                    "name": "",
+                    "id": "2ad91391-4a3e-4df3-a635-22b8b43571d8",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC scheme",
+                    "action": "MousePos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
-                    "id": "7e480e66-1532-4402-b13b-c086e643113f",
+                    "id": "2997a656-5da4-4603-b145-ec9b0029c8ce",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -29,22 +49,22 @@
                 },
                 {
                     "name": "negative",
-                    "id": "0fb8fae1-9c6f-4cba-b1be-10876c2d861e",
+                    "id": "ce58bcd4-fd2b-4b43-9930-450d667b9003",
                     "path": "<Mouse>/scroll/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC scheme",
+                    "groups": "",
                     "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "positive",
-                    "id": "e694a5b3-d002-4608-b4ca-3291ca0cce34",
+                    "id": "7b85d619-7d31-4a2c-8a82-f30aeb2069ae",
                     "path": "<Mouse>/scroll/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC scheme",
+                    "groups": "",
                     "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true

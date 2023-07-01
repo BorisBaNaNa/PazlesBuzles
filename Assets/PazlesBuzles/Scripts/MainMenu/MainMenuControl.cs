@@ -1,8 +1,16 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuControl : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject SelectDifficultyPanel;
+    [SerializeField]
+    private GameObject ImagesPanel;
+    [SerializeField]
+    private GameObject ImageBtnPrefab;
+
     private GameStateMachine _gameStateMachine;
     private Sprite _pazzleImage;
 
@@ -13,6 +21,7 @@ public class MainMenuControl : MonoBehaviour
 
     public void SelectImage(Sprite image)
     {
+        SelectDifficultyPanel.SetActive(true);
         _pazzleImage = image;
     }
 
@@ -22,9 +31,16 @@ public class MainMenuControl : MonoBehaviour
         if (LocalDialog.GetOpenFileName(openFileName))
         {
             byte[] imageData = System.IO.File.ReadAllBytes(openFileName.file);
-            Texture2D texture = new Texture2D(1080, 1080);
+            Texture2D texture = new(2, 2);
             texture.LoadImage(imageData);
-            _pazzleImage = Sprite.Create(texture, new Rect(Vector2.zero, new Vector2(1080, 1080)), Vector2.one * 0.5f);
+
+            int textureWidth = texture.width;
+            int textureHeight = texture.height;
+
+            texture = new Texture2D(textureWidth, textureHeight);
+            texture.LoadImage(imageData);
+
+            BuildButton(texture);
         };
     }
 
@@ -38,5 +54,14 @@ public class MainMenuControl : MonoBehaviour
     public void QuitApplication()
     {
         Application.Quit();
+    }
+
+    private void BuildButton(Texture2D texture)
+    {
+        GameObject imageBtn = Instantiate(ImageBtnPrefab, Vector2.zero, Quaternion.identity, ImagesPanel.transform);
+        Image btnImage = imageBtn.GetComponent<Image>();
+
+        btnImage.sprite = Sprite.Create(texture, new Rect(Vector2.zero, new Vector2(texture.width, texture.height)), Vector2.one * 0.5f);
+        imageBtn.GetComponent<Button>().onClick.AddListener(() => SelectImage(btnImage.sprite));
     }
 }
