@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-internal class GameState : IGameState
+internal class GameState : IGameState, IService
 {
     public List<Sprite> PazzleSprites => _pazzleSprites;
     public Sprite OrigImage => _origImage;
@@ -17,6 +17,7 @@ internal class GameState : IGameState
     public GameState(GameStateMachine stateMachine)
     {
         _stateMachine = stateMachine;
+        AllServices.RegisterService(this);
     }
 
     public void InitGameInfo(Sprite origImage, List<Sprite> pazzleSprites)
@@ -27,15 +28,10 @@ internal class GameState : IGameState
 
     public void Enter()
     {
-
+        SoundManager.PlayAllMusicClips_();
     }
 
     public void Exit()
     {
-    }
-
-    internal void InitGameInfo(object v)
-    {
-        throw new NotImplementedException();
     }
 }

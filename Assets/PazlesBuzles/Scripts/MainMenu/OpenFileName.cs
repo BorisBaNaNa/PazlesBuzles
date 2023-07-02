@@ -14,7 +14,7 @@ public class OpenFileName
     public String filter = null;
     public String customFilter = null;
     public int maxCustFilter = 0;
-    public int filterIndex = 0;
+    public int filterIndex = 1;
     public String file = null;
     public int maxFile = 0;
     public String fileTitle = null;
@@ -41,7 +41,7 @@ public class OpenFileName
         maxFileTitle = fileTitle.Length;
         title = String.Empty;
         flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000008;
-        title = "Заголовок окна";
+        title = "Выберите изображение 900х900";
         initialDir = Application.streamingAssetsPath.Replace('/', '\\');
     }
 }

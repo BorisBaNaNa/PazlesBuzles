@@ -9,6 +9,7 @@
 
     public void Enter()
     {
+        SoundManager.PlayMainMenuClip_();
     }
 
     public void Exit()

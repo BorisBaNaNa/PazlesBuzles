@@ -6,10 +6,7 @@ public class FactoryPazzlePiece : IService
     {
         var piece = new GameObject($"PazzlePiece_{id}").AddComponent<PazzlePiece>();
         piece.transform.SetParent(parent);
-        piece.transform.localPosition = at;
-        piece.transform.localRotation = rotation;
-        piece.Image.sprite = sprite;
-        piece.ID = id;
+        piece.Init(at, sprite, id, rotation);
         piece.gameObject.AddComponent<BoxCollider2D>();
         return piece;
     }

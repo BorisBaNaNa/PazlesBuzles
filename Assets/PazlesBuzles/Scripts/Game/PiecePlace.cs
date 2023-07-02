@@ -10,25 +10,19 @@ public class PiecePlace : MonoBehaviour
         get => _connectedPiece;
         set
         {
-            if (value == null)
-            {
-                if (ID == _connectedPiece.ID && ApproximatelyWithZero(_connectedPiece.transform.rotation.z))
-                    AllServices.Instance.GetService<Menu>().CountSuccessPiece--;
-            }
-            else if (ID == value.ID && ApproximatelyWithZero(value.transform.rotation.z))
-                AllServices.Instance.GetService<Menu>().CountSuccessPiece++;
+            UpdateCountOnConnectionChange(value);
             _connectedPiece = value;
         }
     }
 
-    private SpriteRenderer _renderer;
     private Color _baseColor;
-    private GameState _gameInfo;
     private PazzlePiece _connectedPiece;
+    private SpriteRenderer _renderer;
+    private GameState _gameInfo;
 
     private void Awake()
     {
-        _gameInfo = AllServices.Instance.GetService<Boostraper>().StateMachine.GetGameState<GameState>();
+        _gameInfo = AllServices.GetService<GameState>();
         _renderer = GetComponent<SpriteRenderer>();
         _baseColor = _renderer.color;
     }
@@ -57,7 +51,7 @@ public class PiecePlace : MonoBehaviour
 
     public void SetSize(int width, int height)
     {
-        _renderer.sprite = Sprite.Create(new Texture2D(width, width), new Rect(0, 0, width, width), Vector2.one * 0.5f);
+        _renderer.sprite = Sprite.Create(new Texture2D(width, height), new Rect(0, 0, width, height), Vector2.one * 0.5f);
         //_renderer.size = new Vector2(width, height);
 
         BoxCollider2D collider;
@@ -66,5 +60,18 @@ public class PiecePlace : MonoBehaviour
         gameObject.AddComponent<BoxCollider2D>();
     }
 
+    private void UpdateCountOnConnectionChange(PazzlePiece value)
+    {
+        var menuControl = AllServices.GetService<MenuControls>();
+        if (value == null)
+        {
+            if (ID == _connectedPiece.ID && ApproximatelyWithZero(_connectedPiece.transform.rotation.z))
+                menuControl.CountSuccessPiece--;
+        }
+        else if (ID == value.ID && ApproximatelyWithZero(value.transform.rotation.z))
+            menuControl.CountSuccessPiece++;
+    }
+
     private bool ApproximatelyWithZero(float val) => val > -0.00001f && val < 0.00001f;
+
 }

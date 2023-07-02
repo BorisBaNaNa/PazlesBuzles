@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-internal class LoadLevelState : IGameState
+internal class LoadLevelState : IGameState, IService
 {
     public int PazzleCountOnX => _pazzleCountOnX;
     public int PazzleCountOnY => _pazzleCountOnY;
@@ -17,6 +17,7 @@ internal class LoadLevelState : IGameState
     public LoadLevelState(GameStateMachine stateMachine)
     {
         _stateMachine = stateMachine;
+        AllServices.RegisterService(this);
     }
 
     public void InitLoadInfo(int pazzleCountOnDiagonal, Sprite pazzleImage) 
@@ -34,12 +35,12 @@ internal class LoadLevelState : IGameState
         game.InitGameInfo(_pazzleImage, SlicePazzleImage());
 
         SceneManager.LoadScene("Game");
-        _stateMachine.StateSwitch<GameState>();
+        //_stateMachine.StateSwitch<GameState>();
     }
 
     private List<Sprite> SlicePazzleImage()
     {
-        List<Sprite> sprites = new List<Sprite>();
+        List<Sprite> sprites = new();
         Texture2D origTexture = _pazzleImage.texture;
         float pazzleWidth = origTexture.width / _pazzleCountOnX;
         float pazzleHeight = origTexture.height / _pazzleCountOnY;

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.U2D;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class PazzlePiece : MonoBehaviour
@@ -13,22 +14,15 @@ public class PazzlePiece : MonoBehaviour
 
     private SpriteRenderer _image;
     private BaseControls _baseControls;
-    private LayerMask _tableMask;
     private GameState _gameInfo;
 
     private void Awake()
     {
         _image = GetComponent<SpriteRenderer>();
         _baseControls = new BaseControls();
-        _tableMask = AllServices.Instance.GetService<Boostraper>().TableMask;
-        _gameInfo = AllServices.Instance.GetService<Boostraper>().StateMachine.GetGameState<GameState>();
+        _gameInfo = AllServices.GetService<GameState>();
 
         _baseControls.Player.Rotate.performed += _ => Rotate();
-    }
-
-    private void OnMouseEnter()
-    {
-
     }
 
     private void OnMouseDown()
@@ -56,27 +50,36 @@ public class PazzlePiece : MonoBehaviour
             return;
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(_baseControls.Player.MousePos.ReadValue<Vector2>());
-        mousePos.z = 0;
+        mousePos.z = -0.1f;
         transform.localPosition = mousePos - transform.parent.position;
+    }
+
+    public void Init(Vector3 at, Sprite sprite, int id, Quaternion rotation)
+    {
+        transform.localPosition = at;
+        transform.localRotation = rotation;
+        Image.sprite = sprite;
+        ID = id;
     }
 
     private void ConnectSelf()
     {
+        Vector3 pos;
         if (_gameInfo.SelectedPlace != null && _gameInfo.SelectedPlace.ConnectedPiece == null)
         {
             _gameInfo.SelectedPlace.ConnectedPiece = this;
-            var pos = _gameInfo.SelectedPlace.transform.position;
-            pos.z = transform.position.z;
-            transform.position = pos;
+            pos = _gameInfo.SelectedPlace.transform.position;
+            AllServices.GetService<SoundManager>().PlayDropPiece();
         }
+        else pos = transform.position;
+        pos.z = 0f;
+        transform.position = pos;
     }
 
     private void DisconnectSelf()
     {
         if (_gameInfo.SelectedPlace != null && _gameInfo.SelectedPlace.ConnectedPiece == this)
-        {
             _gameInfo.SelectedPlace.ConnectedPiece = null;
-        }
     }
 
     private IEnumerator DisconnectCorutine()

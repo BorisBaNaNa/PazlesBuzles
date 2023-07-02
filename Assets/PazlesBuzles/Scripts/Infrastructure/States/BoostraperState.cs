@@ -9,7 +9,7 @@
 
     public void Enter()
     {
-        _stateMachine.StateSwitch<MainMenuState>();
+
     }
 
     public void Exit()
